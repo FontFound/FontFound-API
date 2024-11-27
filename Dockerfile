@@ -64,4 +64,4 @@ ENV PORT 3000
 EXPOSE 3000
 
 # Start the server using the production build
-CMD [ "node", "dist/main.ts" ]
+CMD [ "node", "dist/main.js" ]
