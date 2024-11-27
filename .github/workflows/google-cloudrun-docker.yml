@@ -1,0 +1,83 @@
+name: Build, Push, and Deploy to Cloud Runn
+
+on:
+  push:
+    branches:
+      - master
+  
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Set Up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.2.0
+        with: 
+          project_id: ${{ secrets.PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SECRET_SA }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+ 
+      # 2. Set up QEMU for multi-architecture builds
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      # 3. Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # 4. Login to Google Container Registry 1
+      - name: Login to Google Container Registry1
+        uses: docker/login-action@v2
+        with:
+          registry: gcr.io
+          username: _json_key
+          password: ${{ secrets.GCP_SA_KEY }}
+      
+      - name: Create .env file
+        run: |
+          echo "PORT=${{ secrets.PORT }}" >> .env
+          echo "PROJECT_ID=${{ secrets.PROJECT_ID }}" >> .env
+          echo "REGION=${{ secrets.REGION }}" >> .env
+          echo "SECRET_KEY=${{ secrets.GCP_SA_KEY }}" >> .env
+          echo DB_USER=${{ secrets.DB_USER }} >> .env
+          echo DB_SOCKET_PATH=${{ secrets.DB_SOCKET_PATH }} >> .env
+          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
+          echo DB_NAME=${{ secrets.DB_NAME }} >> .env
+          echo DB_HOST=${{ secrets.DB_HOST }} >> .env
+          echo DB_DIALECT=${{ secrets.DB_DIALECT }} >> .env
+          echo BUCKET_NAME=${{ secrets.BUCKET_NAME }} >> .env
+        env:
+          GCP_PROJECT: ${{ secrets.PROJECT_ID }}
+          GCP_REGION: ${{ secrets.REGION }}
+          GCP_SECRET_KEY: ${{ secrets.GCP_SA_KEY }}     
+
+      # 5. Build and Push Docker Image
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: |
+            gcr.io/${{ secrets.PROJECT_ID }}/${{ secrets.IMAGE_NAME }}:${{ secrets.TAG_VERSION }}
+            gcr.io/${{ secrets.PROJECT_ID }}/${{ secrets.IMAGE_NAME }}:${{ secrets.TAG_LATEST }}
+
+      - name: Setup gcloud CLI
+        uses: google-github-actions/setup-gcloud@v0.2.1
+        with:
+          project_id: ${{ secrets.PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      # 7. Deploy to Cloud Run
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${{ secrets.SERVICE }} \
+              --image=gcr.io/${{ secrets.PROJECT_ID }}/${{ secrets.IMAGE_NAME }}:${{ secrets.TAG_LATEST }} \
+              --allow-unauthenticated \
+              --port=${{ secrets.PORT }} \
+              --service-account=630947372650-compute@developer.gserviceaccount.com \
+              --region=${{ secrets.REGION }} \
+              --project=${{ secrets.PROJECT_ID }}
