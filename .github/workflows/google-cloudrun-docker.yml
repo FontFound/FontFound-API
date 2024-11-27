@@ -15,7 +15,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v0.2.0
         with: 
           project_id: ${{ secrets.PROJECT_ID }}
-          service_account_key: ${{ secrets.GCP_SECRET_SA }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
 
       - name: Checkout repository
         uses: actions/checkout@v3
