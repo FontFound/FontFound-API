@@ -58,10 +58,10 @@ COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 
 # Set the environment variable for port
-ENV PORT ${{ secrets.PORT }}
+ENV PORT 3000
 
 # Expose the port that the app runs on
-EXPOSE ${{ secrets.PORT }}
+EXPOSE 3000
 
 # Start the server using the production build
 CMD [ "node", "dist/main.js" ]
