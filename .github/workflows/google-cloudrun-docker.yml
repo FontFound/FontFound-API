@@ -41,7 +41,7 @@ jobs:
           echo PORT=${{ secrets.PORT }} >> .env
           echo PROJECT_ID=${{ secrets.PROJECT_ID }} >> .env
           echo REGION=${{ secrets.REGION }} >> .env
-          echo SECRET_KEY=${{ secrets.GCP_SA_KEY }} >> .env
+          echo GCP_SECRET_KEY=${{ secrets.GCP_SA_KEY }} >> .env
           echo DB_USER=${{ secrets.DB_USER }} >> .env
           echo DB_SOCKET_PATH=${{ secrets.DB_SOCKET_PATH }} >> .env
           echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
