@@ -1,4 +1,4 @@
-name: Build, Push, and Deploy to Cloud Runn
+name: Build, Push, and Deploy to Cloud Run
 
 on:
   push:
