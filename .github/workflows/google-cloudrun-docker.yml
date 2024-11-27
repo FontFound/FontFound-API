@@ -42,11 +42,13 @@ jobs:
           echo "PROJECT_ID=${{ secrets.PROJECT_ID }}" >> .env
           echo "REGION=${{ secrets.REGION }}" >> .env
           echo "SECRET_KEY=${{ secrets.GCP_SA_KEY }}" >> .env
-          echo DB_USER=${{ secrets.DB_USER }} >> .env
-          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
-          echo DB_NAME=${{ secrets.DB_NAME }} >> .env
-          echo DB_HOST=${{ secrets.DB_HOST }} >> .env
-          echo DB_DIALECT=${{ secrets.DB_DIALECT }} >> .env
+          echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+          echo "DB_SOCKET_PATH=${{ secrets.DB_SOCKET_PATH }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
+          echo "DB_DIALECT=${{ secrets.DB_DIALECT }}" >> .env
+          echo "BUCKET_NAME=${{ secrets.BUCKET_NAME }}" >> .env
         env:
           GCP_PROJECT: ${{ secrets.PROJECT_ID }}
           GCP_REGION: ${{ secrets.REGION }}
