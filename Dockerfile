@@ -66,7 +66,7 @@ COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 
 # Expose port 3000
-EXPOSE 3000
+EXPOSE 8080
 
 # Jalankan aplikasi di production menggunakan Node.js
 CMD ["node", "dist/main"]
