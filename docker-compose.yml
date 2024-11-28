@@ -7,10 +7,10 @@ services:
       dockerfile: Dockerfile
     image: nestjs-app:latest
     ports:
-      - "3000:3000"        # Menyambungkan port 3000 dari container ke port 3000 di host
+      - "8080:8080"        # Menyambungkan port 3000 dari container ke port 3000 di host
     environment:
       NODE_ENV: production # Set environment variable
-      PORT: 3000           # Set port sesuai yang digunakan dalam aplikasi
+      PORT: 8080           # Set port sesuai yang digunakan dalam aplikasi
     volumes:
       - .:/usr/src/app     # Menggunakan volume untuk pengembangan agar perubahan kode otomatis
     networks:
