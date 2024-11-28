@@ -4,21 +4,22 @@
 
 FROM node:18-alpine As development
 
-# Create app directory
+# Set WORKDIR untuk aplikasi
 WORKDIR /usr/src/app
 
-# Copy application dependency manifests to the container image.
-# A wildcard is used to ensure copying both package.json AND package-lock.json (when available).
-# Copying this first prevents re-running npm install on every code change.
+# Salin file .env ke dalam WORKDIR
+COPY .env .env
+
+# Salin file package.json dan package-lock.json
 COPY --chown=node:node package*.json ./
 
-# Install app dependencies using the `npm ci` command instead of `npm install`
+# Install dependencies
 RUN npm ci
 
-# Bundle app source
+# Salin seluruh kode sumber
 COPY --chown=node:node . .
 
-# Use the node user from the image (instead of the root user)
+# Gunakan user "node"
 USER node
 
 ###################
@@ -27,24 +28,31 @@ USER node
 
 FROM node:18-alpine As build
 
+# Set WORKDIR
 WORKDIR /usr/src/app
 
+# Salin file .env
+COPY .env .env
+
+# Salin file package.json dan package-lock.json
 COPY --chown=node:node package*.json ./
 
-# In order to run `npm run build` we need access to the Nest CLI which is a dev dependency. In the previous development stage we ran `npm ci` which installed all dependencies, so we can copy over the node_modules directory from the development image
+# Salin node_modules dari stage development
 COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
 
+# Salin semua source code
 COPY --chown=node:node . .
 
-# Run the build command which creates the production bundle
+# Jalankan build
 RUN npm run build
 
-# Set NODE_ENV environment variable
+# Set environment variable untuk production
 ENV NODE_ENV production
 
-# Running `npm ci` removes the existing node_modules directory and passing in --only=production ensures that only the production dependencies are installed. This ensures that the node_modules directory is as optimized as possible
+# Install hanya dependencies production
 RUN npm ci --only=production && npm cache clean --force
 
+# Gunakan user "node"
 USER node
 
 ###################
@@ -53,15 +61,18 @@ USER node
 
 FROM node:18-alpine As production
 
-# Copy the bundled code from the build stage to the production image
+# Set WORKDIR
+WORKDIR /usr/src/app
+
+# Salin file .env
+COPY .env .env
+
+# Salin hasil build dan dependencies dari stage build
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 
-# Set the environment variable for port
-ENV PORT 3000
-
-# Expose the port that the app runs on
+# Expose port 5000 untuk aplikasi yang berjalan (misalnya, Flask atau FastAPI)
 EXPOSE 3000
 
-# Start the server using the production build
-CMD [ "node", "dist/main.js" ]
+# Jalankan aplikasi
+CMD [ "node", "dist/main.js" ]
