@@ -43,6 +43,7 @@ jobs:
           echo "REGION=${{ secrets.REGION }}" >> .env
           echo "GCP_SECRET_KEY=${{ secrets.GCP_SA_KEY }}" >> .env
         env:
+          PORT: ${{ secrets.PORT }}
           GCP_PROJECT: ${{ secrets.PROJECT_ID }}
           GCP_REGION: ${{ secrets.REGION }}
           GCP_SECRET_KEY: ${{ secrets.GCP_SA_KEY }}
