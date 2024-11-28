@@ -44,6 +44,7 @@ jobs:
           echo "GCP_SECRET_KEY=${{ secrets.GCP_SA_KEY }}" >> .env
           echo "DATABASE_URL=${{ secrets.DB_CONNECTION }}" >> .env
           echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+          echo "DB_INSTANCE=${{ secrets.DB_INSTANCE }}" >> .env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
           echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
           echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
@@ -89,6 +90,8 @@ jobs:
               --image=gcr.io/${{ secrets.PROJECT_ID }}/${{ secrets.IMAGE_NAME }}:${{ secrets.TAG_LATEST }} \
               --allow-unauthenticated \
               --port=${{ secrets.PORT }} \
+              --max-instances=10 \
               --service-account=201098739954-compute@developer.gserviceaccount.com \
+              --set-cloudsql-instances=${{ secrets.DB_INSTANCE }} \
               --region=${{ secrets.REGION }} \
               --project=${{ secrets.PROJECT_ID }}
