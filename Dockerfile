@@ -75,4 +75,4 @@ COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 EXPOSE 3000
 
 # Jalankan aplikasi
-CMD [ "node", "dist/main.js" ]
+CMD ["npm", "run", "start:prod"]
