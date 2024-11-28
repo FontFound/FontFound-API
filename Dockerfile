@@ -72,7 +72,7 @@ COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 
 # Expose port 5000 untuk aplikasi yang berjalan (misalnya, Flask atau FastAPI)
-EXPOSE 3000
+EXPOSE 80
 
 # Jalankan aplikasi
 CMD ["npm", "run", "start:prod"]
