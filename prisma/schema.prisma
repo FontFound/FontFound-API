@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = mysql://root:fIQbyG+M3PEjlDB2@34.101.100.160:3306/db_fontfound_api
+  url      = "mysql://root:fIQbyG+M3PEjlDB2@34.101.100.160:3306/db_fontfound_api"
 }
 
 model records {
