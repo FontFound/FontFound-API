@@ -93,6 +93,5 @@ jobs:
               --max-instances=10 \
               --service-account=201098739954-compute@developer.gserviceaccount.com \
               --timeout=1200 \
-              --set-cloudsql-instances=${{ secrets.DB_INSTANCE }} \
               --region=${{ secrets.REGION }} \
               --project=${{ secrets.PROJECT_ID }}
