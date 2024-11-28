@@ -89,7 +89,7 @@ jobs:
           gcloud run deploy ${{ secrets.SERVICE }} \
               --image=gcr.io/${{ secrets.PROJECT_ID }}/${{ secrets.IMAGE_NAME }}:${{ secrets.TAG_LATEST }} \
               --allow-unauthenticated \
-              --port=${{ secrets.PORT }} \
+              --port=8080 \
               --max-instances=10 \
               --service-account=201098739954-compute@developer.gserviceaccount.com \
               --timeout=1200 \
