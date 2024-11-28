@@ -16,6 +16,9 @@ RUN npm ci
 # Salin seluruh kode sumber
 COPY --chown=node:node . .
 
+# Install TypeScript dependencies (optional, jika tidak ada di package.json)
+RUN npm install -g typescript ts-node
+
 # Gunakan user "node"
 USER node
 
@@ -25,7 +28,7 @@ USER node
 
 FROM node:18-alpine AS build
 
-# Set WORKDIR
+# Set WORKDIR untuk build
 WORKDIR /usr/src/app
 
 # Salin file package.json dan package-lock.json
@@ -34,10 +37,10 @@ COPY --chown=node:node package*.json ./
 # Salin node_modules dari stage development
 COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
 
-# Salin semua source code
+# Salin seluruh source code
 COPY --chown=node:node . .
 
-# Jalankan build
+# Kompilasi TypeScript menjadi JavaScript
 RUN npm run build
 
 # Set environment variable untuk production
@@ -55,17 +58,15 @@ USER node
 
 FROM node:18-alpine AS production
 
-# Set WORKDIR
+# Set WORKDIR untuk production
 WORKDIR /usr/src/app
 
 # Salin hasil build dan dependencies dari stage build
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 
-# Set the environment variable for port
-ENV PORT 3000
-# Expose port 3000 untuk aplikasi
+# Expose port 3000
 EXPOSE 3000
 
-# Jalankan aplikasi
-CMD ["npm", "run", "start:prod"]
+# Jalankan aplikasi di production menggunakan Node.js
+CMD ["node", "dist/main"]
