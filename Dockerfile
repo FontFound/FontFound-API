@@ -7,6 +7,9 @@ FROM node:18-alpine AS development
 # Set WORKDIR untuk aplikasi
 WORKDIR /usr/src/app
 
+# Copy env file
+COPY .env .env
+
 # Salin file package.json dan package-lock.json
 COPY --chown=node:node package*.json ./
 
@@ -27,6 +30,9 @@ FROM node:18-alpine AS build
 
 # Set WORKDIR
 WORKDIR /usr/src/app
+
+# Copy env file
+COPY .env .env
 
 # Salin file package.json dan package-lock.json
 COPY --chown=node:node package*.json ./
@@ -57,6 +63,9 @@ FROM node:18-alpine AS production
 
 # Set WORKDIR
 WORKDIR /usr/src/app
+
+# Copy env file
+COPY .env .env
 
 # Salin hasil build dan dependencies dari stage build
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
