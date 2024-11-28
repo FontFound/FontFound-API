@@ -42,6 +42,7 @@ jobs:
           echo "PROJECT_ID=${{ secrets.PROJECT_ID }}" >> .env
           echo "REGION=${{ secrets.REGION }}" >> .env
           echo "GCP_SECRET_KEY=${{ secrets.GCP_SA_KEY }}" >> .env
+          echo "DATABASE_URL=${{ secrets.DB_CONNECTION }}" >> .env
         env:
           GCP_PROJECT: ${{ secrets.PROJECT_ID }}
           GCP_REGION: ${{ secrets.REGION }}
