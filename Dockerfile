@@ -2,13 +2,10 @@
 # BUILD FOR LOCAL DEVELOPMENT
 ###################
 
-FROM node:18-alpine As development
+FROM node:18-alpine AS development
 
 # Set WORKDIR untuk aplikasi
 WORKDIR /usr/src/app
-
-# Salin file .env ke dalam WORKDIR
-COPY .env .env
 
 # Salin file package.json dan package-lock.json
 COPY --chown=node:node package*.json ./
@@ -26,13 +23,10 @@ USER node
 # BUILD FOR PRODUCTION
 ###################
 
-FROM node:18-alpine As build
+FROM node:18-alpine AS build
 
 # Set WORKDIR
 WORKDIR /usr/src/app
-
-# Salin file .env
-COPY .env .env
 
 # Salin file package.json dan package-lock.json
 COPY --chown=node:node package*.json ./
@@ -59,13 +53,10 @@ USER node
 # PRODUCTION
 ###################
 
-FROM node:18-alpine As production
+FROM node:18-alpine AS production
 
 # Set WORKDIR
 WORKDIR /usr/src/app
-
-# Salin file .env
-COPY .env .env
 
 # Salin hasil build dan dependencies dari stage build
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
