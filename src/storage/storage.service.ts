@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { DownloadResponse, Storage } from '@google-cloud/storage';
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import StorageConfig from './storage-config';
 
 @Injectable()
@@ -26,16 +26,27 @@ export class StorageService {
     media: Buffer,
     metadata: { [key: string]: string }[],
   ) {
-    const object = metadata.reduce((obj, item) => Object.assign(obj, item), {});
-    const file = this.storage.bucket(this.bucket).file(path);
-    const stream = file.createWriteStream();
-    stream.on('finish', async () => {
-      return await file.setMetadata({
-        metadata: object,
+    try {
+      const object = metadata.reduce(
+        (obj, item) => Object.assign(obj, item),
+        {},
+      );
+      const file = this.storage.bucket(this.bucket).file(path);
+      const stream = file.createWriteStream();
+      stream.on('finish', async () => {
+        return await file.setMetadata({
+          metadata: object,
+        });
       });
-    });
-    stream.end(media);
-    return `https://storage.googleapis.com/bucker-endpoint-api-fontfound/${path}`;
+      stream.end(media);
+      return `https://storage.googleapis.com/bucker-endpoint-api-fontfound/${path}`;
+    } catch (error) {
+      return {
+        message: 'Failed to save media',
+        error: error,
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+      };
+    }
   }
 
   async delete(path: string) {

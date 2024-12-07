@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -47,8 +48,19 @@ export class AppController {
     @Body('device_id') device_id: string,
     @Body('result') result: string,
   ) {
-    console.log('Uploaded file:', file);
-    return 
+    if (!file) {
+      throw new BadRequestException('File is required');
+    }
+
+    if (!['image/png', 'image/jpeg', 'image/jpg'].includes(file.mimetype)) {
+      throw new BadRequestException(
+        'Only PNG, JPG, and JPEG files are allowed',
+      );
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      throw new BadRequestException('File size exceeds limit of 5MB');
+    }
+
     const uniqueSuffix = Math.round(Math.random() * 1e9);
     const ext = file.originalname;
     const filename = `${device_id}-${uniqueSuffix}${ext}`;
