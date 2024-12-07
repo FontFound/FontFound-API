@@ -47,6 +47,8 @@ export class AppController {
     @Body('device_id') device_id: string,
     @Body('result') result: string,
   ) {
+    console.log('Uploaded file:', file);
+    return 
     const uniqueSuffix = Math.round(Math.random() * 1e9);
     const ext = file.originalname;
     const filename = `${device_id}-${uniqueSuffix}${ext}`;
