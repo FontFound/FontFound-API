@@ -26,21 +26,8 @@ export class AppService {
     }
   }
 
-  async getRecordById(id: string) {
+  async getRecordsByDeviceId(id: string) {
     try {
-      const exist = await this.prisma.records.findFirst({
-        where: {
-          device_id: id,
-        },
-      });
-
-      if (!exist) {
-        return {
-          message: 'Record not found',
-          status: HttpStatus.NOT_FOUND,
-        };
-      }
-
       const data = await this.prisma.records.findMany({
         where: {
           device_id: id,
@@ -48,13 +35,37 @@ export class AppService {
       });
 
       return {
-        message: 'Succesfully fetched record',
+        message: 'Succesfully Get Data By Device Id',
         data: data,
         status: HttpStatus.OK,
       };
     } catch (error) {
       return {
         message: 'Failed to fetch record',
+        error: error,
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+      };
+    }
+  }
+
+  async createRecord(data: any) {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const createData = await this.prisma.records.create({
+        data: {
+          device_id: data.device_id,
+          result: data.result,
+          image_url: data.image_url,
+        },
+      });
+
+      return {
+        message: 'Successfully created record',
+        status: HttpStatus.CREATED,
+      };
+    } catch (error) {
+      return {
+        message: 'Failed to create record',
         error: error,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
       };
