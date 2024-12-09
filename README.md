@@ -85,10 +85,7 @@ http://localhost:<your port>
 ---
 
 
-### License Section Details:
-- This section includes a reference to an external `LICENSE` file, which should contain the terms of the MIT License. 
-- If you don't have the `LICENSE` file in the repository, you can include the full text of the MIT License directly in the `README.md`. Here's how to do it:
-
+### License
 ```markdown
 ## License
 
