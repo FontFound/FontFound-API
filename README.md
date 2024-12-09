@@ -1,8 +1,8 @@
-<h1 align="center">FontFound API</h1>
-
 <p align="center">
   <img src="https://res.cloudinary.com/dyg5rtwwe/image/upload/v1733753082/rhwrs4hfyeifxivof3oy.png" alt="FontFound API">
 </p>
+
+<h1 align="center">FontFound API</h1>
 
 FontFound API is a backend service built using **TypeScript**, **NestJS**, and **Prisma**, designed to power the FontFound application. This repository provides a fully containerized environment using **Docker** and an automated CI/CD pipeline with **GitHub Actions** for deployment to **Google Cloud Run**.
 
