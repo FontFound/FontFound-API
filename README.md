@@ -51,3 +51,33 @@ CLIENT_EMAIL=your_google_cloud_service_account_email
 
 # Google Cloud Storage
 STORAGE_MEDIA_BUCKET=your_google_cloud_storage_bucket_name
+```
+
+---
+
+## Local Development
+1. Clone the Repository
+```bash
+git clone https://github.com/your-username/fontfound-api.git
+cd fontfound-api
+```
+
+2. Install Dependencies
+```bash
+npm install
+```
+
+3. Run Database Migrations
+```bash
+npx prisma migrate dev
+```
+
+4. Start the Development Server
+```bash
+npm run start:dev
+```
+
+5. Access the API Open your browser or API client at:
+```bash
+http://localhost:<your port>
+```
