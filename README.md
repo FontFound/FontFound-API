@@ -1,73 +1,49 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# FontFound API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+FontFound API is a backend service built using **TypeScript**, **NestJS**, and **Prisma**, designed to power the FontFound application. This repository provides a fully containerized environment using **Docker** and an automated CI/CD pipeline with **GitHub Actions** for deployment to **Google Cloud Run**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **NestJS Framework**: Modular and efficient API architecture.
+- **Prisma ORM**: Powerful database interaction with schema-based type safety.
+- **Docker Support**: Consistent and portable containerized deployments.
+- **GitHub Actions**: Streamlined CI/CD for automated testing and deployment.
+- **Google Cloud Run**: Serverless application hosting with scalable infrastructure.
 
-## Installation
+---
 
-```bash
-$ npm install
-```
+## Prerequisites
 
-## Running the app
+To set up the project locally or for deployment, ensure the following tools are installed:
 
-```bash
-# development
-$ npm run start
+1. **Node.js** (v16 or higher)  
+   - [Download Node.js](https://nodejs.org/)
+   
+2. **Docker**  
+   - [Install Docker](https://www.docker.com/get-started)
+   
+3. **Google Cloud SDK**  
+   - [Install Google Cloud SDK](https://cloud.google.com/sdk/docs/install)
+   
+4. **Git**  
+   - [Install Git](https://git-scm.com/)
 
-# watch mode
-$ npm run start:dev
+---
 
-# production mode
-$ npm run start:prod
-```
+## Environment Variables
 
-## Test
+To configure the project, create a `.env` file in the root directory. Add the following environment variables:
 
-```bash
-# unit tests
-$ npm run test
+```env
+# Database connection URL
+DATABASE_URL=your_database_connection_url
 
-# e2e tests
-$ npm run test:e2e
+# Google Cloud Project credentials
+PROJECT_ID=your_google_cloud_project_id
+PRIVATE_KEY="your_google_cloud_service_account_private_key"
+CLIENT_EMAIL=your_google_cloud_service_account_email
 
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+# Google Cloud Storage
+STORAGE_MEDIA_BUCKET=your_google_cloud_storage_bucket_name
