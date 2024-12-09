@@ -41,7 +41,7 @@ export class AppService {
       };
     } catch (error) {
       return {
-        message: 'Failed to fetch record',
+        message: 'Failed To Get Data By Device Id',
         error: error,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
       };
@@ -60,12 +60,12 @@ export class AppService {
       });
 
       return {
-        message: 'Successfully created record',
+        message: 'Successfully Create History Record',
         status: HttpStatus.CREATED,
       };
     } catch (error) {
       return {
-        message: 'Failed to create record',
+        message: 'Failed To Create History Record',
         error: error,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
       };
