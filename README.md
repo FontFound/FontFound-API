@@ -1,4 +1,4 @@
-# FontFound API
+<h1 align="center">FontFound API</h1>
 
 <p align="center">
   <img src="https://res.cloudinary.com/dyg5rtwwe/image/upload/v1733753082/rhwrs4hfyeifxivof3oy.png" alt="FontFound API">
