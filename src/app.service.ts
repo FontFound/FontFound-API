@@ -7,13 +7,17 @@ export class AppService {
   getHello(): string {
     return 'Hello World!';
   }
-
+  
   async getAllRecords() {
     try {
-      const data = await this.prisma.records.findMany();
-
+      const data = await this.prisma.records.findMany({
+        orderBy: {
+          created_at: 'desc',
+        },
+      });
+  
       return {
-        message: 'Succesfully fetched records',
+        message: 'Successfully fetched records',
         data: data,
         status: HttpStatus.OK,
       };
@@ -25,17 +29,20 @@ export class AppService {
       };
     }
   }
-
+  
   async getRecordsByDeviceId(id: string) {
     try {
       const data = await this.prisma.records.findMany({
         where: {
           device_id: id,
         },
+        orderBy: {
+          created_at: 'desc',
+        },
       });
-
+  
       return {
-        message: 'Succesfully Get Data By Device Id',
+        message: 'Successfully Get Data By Device Id',
         data: data,
         status: HttpStatus.OK,
       };
